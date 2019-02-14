@@ -1,0 +1,37 @@
+@media (max-width:640px) {
+    input {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    .top_center {
+        width: 100%;
+        text-align: center;
+    }
+    .top_logo {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+        width: auto;
+    }
+    .top_link {
+        display: none;
+    }
+    .top_search {
+        display: inline-block;
+        float: none;
+        width: auto;
+    }
+    .content {
+        width: 90% !important;
+        left: 5% !important;
+    }
+    .field_err {
+        display: none !important;
+    }
+    .hm-body-bg {
+        height: 100%;
+    }
+    .footer {
+        display: none;
+    }
+}

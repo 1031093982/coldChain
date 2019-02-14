@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>冷链平台</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <style type="text/css">
+        html{height:100%}
+        body{height:100%;margin:0px;padding:0px}
+        #container{height:100%}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Go40IIOGqONveu3vtLQudLavHFGRhBlD"></script>
+    <script>
+
+                function init(){
+                $.ajax({
+                    url:"/map/pathinfo",
+                    type:"post",
+                    data:{orderId:document.getElementById("orderNum").value}
+                    ,success:function(res){
+                        var resultdata = JSON.parse(res);
+                        var arrayData = resultdata.arr;
+                        var tem=resultdata.tem;
+                        {
+                         var map = new BMap.Map("container");          // 创建地图实例
+                            map.enableScrollWheelZoom(true);
+                            var point = new BMap.Point(116.404, 39.915);  // 创建点坐标
+                            map.centerAndZoom(point, 8);
+                            for(var i=0;i<3;i++){
+                                str = arrayData[i];
+                                arr=str.split(",");
+                                var markers = new BMap.Point(arr[0],arr[1]);
+                                map.addOverlay( new BMap.Marker(markers));
+                            }
+                                var arrs =new Array();
+                                     for(var i=0;i<2;i++){
+                                         str = arrayData[i];
+                                         arrp=str.split(",");
+                                         var markers = new BMap.Point(arrp[0],arrp[1]);
+                                         arrs.push(markers);
+                                     }
+                            var polyline = new BMap.Polyline(arrs,{strokeColor:"blue", strokeWeight:4, strokeOpacity:0.5});
+                            map.addOverlay(polyline);
+                            // 根据坐标得到地址描述并设置信息框
+                            var myGeo = new BMap.Geocoder();
+                            var znowplace = arrayData[1];
+                            zarr=znowplace.split(",");
+                            myGeo.getLocation(new BMap.Point(zarr[0], zarr[1]), function(result){
+                                if (result){
+                                    var opts = {
+                                        width : 10,     // 信息窗口宽度
+                                        height: 10,     // 信息窗口高度
+                                        title : "当前信息"  // 信息窗口标题
+                                    };
+                                    var infoWindow = new BMap.InfoWindow("当前位置:"+result.address+"\n   货厢温度:"+tem+"°C",opts);  // 创建信息窗口对象
+                                    map.openInfoWindow(infoWindow, new BMap.Point(zarr[0],zarr[1]));
+                                }
+                            });
+
+
+                        }
+                    }
+                });
+         }
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                });
+    </script>
+</head>
+<body>
+<!--水平导航栏部分--><div><ul class="layui-nav" ><li class="layui-nav-item">&nbsp;&nbsp;&nbsp;&nbsp;</li><li class="layui-nav-item" style="right: auto"><span id="loginuser"></span></li><script>  $("#loginuser").html(localStorage.username);</script><li class="layui-nav-item"><a href="">&nbsp;&nbsp;&nbsp;&nbsp;</a></li><li class="layui-nav-item"><a href="/historyorder">历史订单</a></li><li class="layui-nav-item"><a href="/equipmanage">设备管理</a><!-- </li><li class="layui-nav-item"><a href="/usercenter">个人中心</a></li> -->       <li class="layui-nav-item"><a href="/user/logout">退出登录</a></li>
+</ul><script>layui.use('element', function(){var element = layui.element;element.on('nav(demo)', function(elem){layer.msg(elem.text());});});</script><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单查询：<input type="text" id="orderNum" ><button onclick="init()"class="layui-btn layui-btn-primary layui-btn-sm">查询</button></div><div></div></div>
+<!--地图-->
+<div id="container" style="height: 520px;width: 90%;left: 50px"> </div>
+<script>
+    window.onload=function(){
+        layer.msg("请输入订单号查询运送车辆位置");
+    }
+</script>
+</body>
+</html>

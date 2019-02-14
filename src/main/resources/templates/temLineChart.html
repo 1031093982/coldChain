@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/js/echarts.js"></script>
+    <script src="/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div>
+    &nbsp;&nbsp;&nbsp;&nbsp;订单编号：<span id="ordernum"></span>
+    <script type="text/javascript">$("#ordernum").html(localStorage.orderNum);</script>
+</div>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    $.ajax({
+        type: "post",
+        async: true,
+        url: '/order/temListHis',
+        data: {orderNum:localStorage.orderNum},
+        dataType: "json",
+        success: function (result) {
+            //myChart.hideLoading();//隐藏加载动画
+            timearr = new Array();
+            for(var i=0;i<result.length;i++){
+                timearr.push(formatUnixtimestamp(parseFloat(result[i].name)));
+            }
+            myChart.setOption(
+                {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: timearr,
+                        show: false
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: result,
+                        type: 'line'
+                    }]
+
+                }
+            )
+        }
+    });
+    function formatUnixtimestamp (unixtimestamp){
+        var unixtimestamp = new Date(unixtimestamp);
+        var year = 1900 + unixtimestamp.getYear();
+        var month = "0" + (unixtimestamp.getMonth() + 1);
+        var date = "0" + unixtimestamp.getDate();
+        var hour = "0" + unixtimestamp.getHours();
+        var minute = "0" + unixtimestamp.getMinutes();
+        var second = "0" + unixtimestamp.getSeconds();
+        return year + "-" + month.substring(month.length-2, month.length)  + "-" + date.substring(date.length-2, date.length)
+            + " " + hour.substring(hour.length-2, hour.length) + ":"
+            + minute.substring(minute.length-2, minute.length) + ":"
+            + second.substring(second.length-2, second.length);
+    }
+</script>
+</body>
+</html>

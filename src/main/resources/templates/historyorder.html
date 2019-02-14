@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>订单管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script src="/layui/layui.js" charset="utf-8"></script>
+    <script src="/js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<!--水平导航栏部分-->
+<div>
+    <ul class="layui-nav" >
+        <li class="layui-nav-item">&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li class="layui-nav-item" style="right: auto"><span id="loginuser"></span></li>
+        <script>  $("#loginuser").html(localStorage.username); </script>
+        <li class="layui-nav-item"><a href="">&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="layui-nav-item"><a href="/">返回首页</a></li>
+        <li class="layui-nav-item"><a href="/equipmanage">设备管理</a></li>
+        <!--<li class="layui-nav-item"><a href="/usercenter">个人中心</a></li>-->
+    </ul>
+    <script>
+        layui.use('element', function(){
+            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+            //监听导航点击
+            element.on('nav(test)', function(elem){
+                //console.log(elem)
+                layer.msg(elem.text());
+            });
+        });
+        layui.use('layer', function(){
+            var layer = layui.layer;
+
+            //layer.msg('hello');
+        });
+    </script>
+</div>
+<script type="text/javascript">
+    function search() {
+        tableIns.reload({
+            where: {
+                //设定异步数据接口的额外参数，任意设
+                // user_phone:document.getElementById("searchPhone").value,
+                user:localStorage.username,
+                 order_num:document.getElementById("searchOrder").value
+                ,car_num:document.getElementById("searchCar").value
+            }
+            ,page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        })
+    }
+</script>
+<div>
+<table class="layui-table" >
+    <thead>
+<tr><th>
+    <input placeholder="订单编号搜索" id="searchOrder" > <button class="layui-btn layui-btn-radius layui-btn-normal" onclick="search()">查询</button>
+    <input placeholder="运输设备牌号搜索" id="searchCar" > <button  class="layui-btn layui-btn-radius layui-btn-warm" onclick="search()">查询</button>
+    <!--<input placeholder="用户手机搜索" id="searchPhone" > <button class="layui-btn layui-btn-radius" onclick="search()">查询</button>-->
+</th>
+</tr> </thead>
+</table>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="test" lay-data="{id: 'idTest'}"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">查看详情</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+<script type="text/html" id="barDemoPath">
+    <a class="layui-btn layui-btn-xs" lay-event="editPath">查看详情</a>
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+
+<script th:inline="none">
+    layui.use('table', function(){
+        var table = layui.table;
+        tableIns = table.render({
+            elem: '#test'
+            ,height:500
+            ,url:"/order/orderlist"
+            ,where:{
+                user:localStorage.username
+            }
+            ,toolbar: '#toolbarDemo'
+            ,title: '订单管理'
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field: 'orderNum', title: '订单编号', width:138, sort: true, fixed: 'left'}
+                ,{field: 'userPhone', title: '用户电话', width:120}
+                ,{field: 'carNum', title: '运送车辆', width:100, sort: true}
+                ,{field: 'departure', title: '出发地', width:228}
+                ,{field: 'destination', title: '目的地', width: 228}
+                ,{field: 'temMax', title: '超限温度', width: 100, sort: true}
+                ,{fixed: 'right', title:'历史温度信息', toolbar: '#barDemo', width:130}
+                // ,{fixed: 'right', title:'地理位置', toolbar: '#barDemo', width:130}
+                ,{fixed: 'right', title:'车辆历史路径', toolbar: '#barDemoPath', width:130}
+            ]]
+            ,page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('确认删除?', function(){
+                  alert(data.orderNum);
+                });
+            } else if(obj.event === 'edit'){
+            //将订单编号存到本地以供使用
+            localStorage.orderNum = data.orderNum;
+            layer.open({
+                title:'历史温度记录信息',
+                type: 2,
+                content: ['/temLineChart','no'], //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                // offset: ['100px', '50px'],
+                area: ['700px', '500px']
+            });
+        }else if(obj.event === 'editPath'){
+                //将订单编号存到本地以供使用
+                localStorage.orderNum = data.orderNum;
+                layer.open({
+                    title:'历史路径信息',
+                    type: 2,
+                    content: '/pathHistory', //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                    // offset: ['100px', '50px'],
+                    area: ['700px', '500px']
+                });
+            }
+    });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!--//废弃-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>个人中心</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script src="/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<!--水平导航栏部分-->
+<div>
+    <ul class="layui-nav" >
+        <li class="layui-nav-item">&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li class="layui-nav-item" style="right: auto"><span id="loginuser"></span></li>
+        <script>   document.getElementById("loginuser").innerHTML=localStorage.username;</script>
+        <li class="layui-nav-item"><a href="">&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+        <li class="layui-nav-item"><a href="/">返回首页</a></li>
+        <li class="layui-nav-item"><a href="/equipmanage">设备管理</a></li>
+        <li class="layui-nav-item"><a href="/historyorder">历史订单</a></li>
+        <li class="layui-nav-item"><a href="/user/logout">退出登录</a></li>
+
+    </ul>
+    <script>
+        layui.use('element', function(){
+            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+            //监听导航点击
+            element.on('nav(demo)', function(elem){
+                //console.log(elem)
+                layer.msg(elem.text());
+            });
+        });
+        function formatUnixtimestamp (unixtimestamp){
+            var unixtimestamp = new Date(unixtimestamp);
+            var year = 1900 + unixtimestamp.getYear();
+            var month = "0" + (unixtimestamp.getMonth() + 1);
+            var date = "0" + unixtimestamp.getDate();
+            var hour = "0" + unixtimestamp.getHours();
+            var minute = "0" + unixtimestamp.getMinutes();
+            var second = "0" + unixtimestamp.getSeconds();
+            return year + "-" + month.substring(month.length-2, month.length)  + "-" + date.substring(date.length-2, date.length)
+                + " " + hour.substring(hour.length-2, hour.length) + ":"
+                + minute.substring(minute.length-2, minute.length) + ":"
+                + second.substring(second.length-2, second.length);
+        }
+
+    </script>
+</div>
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">运输设备查询</li>
+        <li>添加新设备</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--tab1-->
+        <div class="layui-tab-item layui-show">
+        <script>
+
+        </script>
+        </div>
+        <!--tab2-->
+        <div class="layui-tab-item">
+        <script>
+
+        </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

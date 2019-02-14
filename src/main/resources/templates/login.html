@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit">
+    <title>登录</title>
+    <!--<link rel="shortcut icon" href="image/ll.jpg">-->
+    <link rel="stylesheet" href="/css/login.css"/>
+    <link rel="stylesheet" href="/css/mobile.css"/>
+    <script type="text/javascript" src="/js/jquery-1.1.0.min.js"></script>
+    <script type="text/javascript" src="/js/jparticle.jquery.min.js"></script>
+    <script type="text/javascript" src="/js/login.js"></script>
+</head>
+</head>
+<body id = “cas”>
+<div class="top">
+    <div class="top_center">
+        <div class="top_logo">
+                <img src="/image/ll.png"></a>
+        </div>
+        <div class="top_link">
+        </div>
+        <div class="top_search">
+            <button onclick="window.location.href='/register'">注册</button>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <p>用户登录</p>
+    <form id="fm1" class="form_bk" action="/user/checklogin" method="post">
+        <div  class="form_area">
+            <div class="form_group">
+                <label>用户名</label>
+                <input id="username" name="username" class="form_field user_field" tabindex="1" placeholder="请输入用户名" type="text" value="" size="25" autocomplete="off"/>
+                <div class="field_err" id = "errorName2">
+                </div>
+            </div>
+            <div class="form_group">
+                <label>密码</label>
+                <a href = "/register" class="l_right">忘记密码？</a>
+                <input id="password" name="password" class="form_field pass_field" tabindex="2" placeholder="请输入密码" type="password" value="" size="25" autocomplete="off"/>
+                <div class="field_err" id = "errorMsg">
+
+                </div>
+            </div>
+            <div class="form_group">
+                <label>验证码</label>
+                <div class="verification_box">
+                    <input type="text"  size="6" id="inputcode" placeholder="请输入验证码" class="form_field verification_input ">
+                    <div class="verification_code_box" title="点击可切换验证码">
+                        <<input type="button" id="imagecode"   onclick="createCode()"  value="3333"}/>
+                    </div>
+                </div>
+                <div class="field_err" id = "showcheckmsg">
+                </div>
+            </div>
+            <input type="hidden" name="lt" value="LT-410-FdoH6BK2DfcPQIQvpDeUJuPdP9NRtf-hnssoserver" />
+            <input type="hidden" name="execution" value="3b27c18a-9730-4e90-afeb-d0630c693c99_ZXlKaGJHY2lPaUpJVXpVeE1pSjkuUlhOWFNWTjNTMVk0T0dNelQzcHlPVTlCZWt4SmMweHdOMDF5UjJwc2FXOW9UVVJqTUcwclluQTRTR1ZNVG1waFRuSnJUVTEwU25JNVVrUlViMDQwTVZWUWFIbHRlVTh6YkZweUszbDNhVWRJTDNoNk1VUTRWVFpFVkZCUVJVeDVlR1E1TldGTE1EWm1kMWt5VjBKelozZGhTREo2UlROYVdGQkdVV2Q2ZUZZeWNrNUJXU3R6YUdKWWVsSnFaemQ2VTJsMFZWVm1XbWRuWWtwd1pUZzFVMlp6WkdjcmNITXJLMjlZWmtadU4yRXhhWGtyZEhCNmNGWmhTVFpSZFZkeU1VTlVaamxTU25GTFZrZGFOekkyTlUxakwycDNNVkF2SzBKMGFUZHlhVkZVZVhoa1JGTXpTV051VlhKeE1YcFNNakZ2T0RkbWEwSlJjRzF2ZVhsSlZteExWQ3Q2TlZSNVpFZHdkekZHVDBOMFkxSktOVzkwVURCbk4za3dSa2RsYzJScFQwZG5RMGhwV1RKdU1UbFBha2N6WVVJd1JuWm5jVWwyYVVaUVZEUnZaWFZTZG5JeFRtNXZjV3hGV1ZodVMzSlhVa0ZuWlVKdlZrbGhkblpITTNsM1NrOXhSbmR2UW5Ka2VrZ3dTVkZuY1hGUFpuaG1UR2RRYWpKaVVHeG1aU3RFZEhSQ09FZExiMVZQTWpNNGEwSktOM1Y1UlV4WE0wWTRSMG8xUkZwNGRHdGpkbXhMS3pWS1ZFTTVjWFp5WkVocE5EWjRVR3BaYzFWdGEwb3hjRXh5WVRab1Z5dE5Na2xNWVRkNmRVdzNOVWhwVFRZeGVVVkZhSGh6YVd4U1ZETmtlbTF6TlVaNWNubERWbFJtYTNsd1dHVkVibnBZTURSVE1YRTFWVkYyV0ZwSlltUkdhbk5FYUZVM2NXdFlRM0ZvWld0cllqQkNPRkF5Y2t0blZ6QlJTVzVLTVVocmRYQjNlVEpuVUdrcmIwODVPRFJUUkdSek9HZG9iMmhxUW05dFRHVlVVMUpRYmxJNVQzUnFkblJMV2pKb2VUZ3dNME5OYlRjek1XcDZkalpvZVVSVlkyZElVMnBXTkV0NFZrVlFWV2hYU3pkaWNHcGhTMllyWWtSNlRqaHBka1YyZVdFd05raERZalJFTDNFNFNXb3pTM1JVUWxSVGNtbDBVM3BWY2pkeFpHMUxUWEJ1SzFSNVZWZFhia1ZGZFRjdlFqQnZXRzlSVnpoaWRVMUhRbTl6VUM5VllVbDBaall2V1UwMGRFZEliVzUzU3pSeU5WSndUakppWlhGSVZVMHhVRnBCWVd0aE5HNXZUWFpDVkRrelJtUkxhRmwzYjNWUlpXUTNXSFVyTDBwbGFuVktaekZXVlc5eWRXMUlaV1I2YzIxTE16Vk1OazVHTWt0c1dqWkRiMXA1TWs5TlNWUXhNa3hUVlZoRmFpOUhhbkZPU1hWTGFGcDFjV2tyTjBoV1VGYzRZelprUm01d2JEQk5aMGgzZW1ScE5UaGFXSFJyY0Zod1FrUTJjbWxYVVV0RFIycFJRVFJ2YUdZNU4yWlVWVkI1YjFWMk9VVk9jV0ZQSzBwdmRtcHVNa3BxTkdSSVNVMXFTMm95VUhCYVFXaFlOWFpSTVhOQlZETmFUVVJSV1VWWWNESnhZVzUzUW0xemQwMUhWa1pwTTNKcE1rcFZiVnBDVjJSWk1UZzRUa2hGV0c1RVVFVXpjMVJ3VTFWNFVUQkVXa3c0Ym5WMWRpdDZiV0ZUV1VWTFNWZzBNMFZDTmtnMlpVbENOM1pqVDA0dk9YVlFUbWxGV0c4dlYzUTJPRkJKTTNwSVZqZDJhSEpuTVd0NlRHcFVPWGhHVUhkeU5IVXZha0ZFZVM5NkwweFdPV2R4VmxBM1NtUXdaelZDWjNOS1NUUjRObmRtUjNWdmNWa3piRFpSWldOdloxVXpURVpKTjJOM05HcHBWa1ZwT1U1Tk56aFNkWG8wWkU4d1ozQnlSRkZzSzJSeVJFSjNObWN3YVVsQ1kwWlhZalJNTkU5bU1HMVJWeXRHVjJoQ1dXbEdhMHRUZW1zMmIzVTBabVpUYWs5UU1taHBOVzV1T0hrNWRERXpaa28zU1RjelNGTldVV0kzTkd3NE0zcGxiM2x4TkZWM1IyOUhXakUyTlVwb01YRnNiRGh1YTA5T2NteEtPV2s0T1dkdE1tVk9XbHBwVWpJMk5rUlBabTAxZWxGSlJ5ODNkMVpuT0hOdGNWTXJXRWhpTVhaalEwcGpXWEZ1VDNsaVEwYzBaMFUyU1ZKeWNETkZiMmhCTm5GMmIyNVVXVGhSY1ZSSWNrdHlUbEoyVjNsT1VXbHlVRGR0TVRWeFIzSmlSRkI1WkhNNVJ6UmhjMU5USzBNdmQyWlBXRzF4TTJaQ2QyVTRPRXQ1VFdGVlJFOVVPVko1VEUxT05GSnBhSEZJTXpCc2VuTjRRelJHU2s1UlNYbGtjWGRKV0VGMFVVeHJaMmw2UVRrMldESkJTakJTZW1ac2NHeGxNbWg0UmpGTlMyOXVRVTFPSzI1WVZqTnRObEpXUkZSUlVuTkhUSHBDY210RllsWjJkMWM0VUZOelRFWlNSSFJ3ZWtoUlIySlJRWHAyTkVwbVVrbHhRbkZtT1dsNk9VeEZSM1ZZTUZOYU1UaDJSV2d6YW1wbE9ERkZOVnBUTmt0clp6YzVlV3hHV0VKdVEwcHVZbHBCUm5oT2VFOXpPVmw0Y1hWRWRqZElkV0oxY0hkaGQyOUtUVEIzT0RSbE5WVkVia3BzTkdaVlRsRkhVazgySzNKWFdHeFJVMVpOYTNkbFRrcERTVU4zYmtJdlVYWk9WMkZNTUc5clIwZFNXalVyU3paWlppOURVMkZYZGxOT2RIWm9LMEpLSzJwR01HSlZaVUpaZDBncmEzSjVkekpPVEdkRVRYUndhaThyVkd0bVRtbDFLM0ZRV2tsTGJ6WmpaV1ZUYlhWbVNsbFhkemhGUlhCelowUlVLMVF2TDJzNFRIa3pkMWd4TWxSMlV6QlVkVmhDUXpCRUt6QnZaemxMWjBoVVZHMUdaazEyUjB0SVRtOVVOelJrWkZCcWNFcEJPRTh2U0ZvMlUwaHNXak5yUTBGdFdIQkpLek4yYWtKMWF6aHhOSEpxZVdKd1V6SjJjMVJhYmxKUlozaHFkMGR2VlZKS1NrMUZVWEkwTjIweGNETmFVRTVzTVZaQ05FMDJXVE5UY0RCalZVOWxTVGwwSzAxTlFrc3hhbWhTU1RWVGVXVkljRmt5UkVKWE0wUklOMXAwVWpGTmIzWjNiek5oZDJWcU5rNWtWME5GVkdzelRtWm5jbVZsVkN0aVlVNVZVRkoxVm5kaFVGSlZZVTV3SzJ4cU9XWkZjRzg0U0RKVVkyVkRkM1JJZDBoa2ExWnpTMlp2WW01UE1TdFZVV2R4WWpkMVJsaDVOMXBNU1ZwbVVEQlVVMVJZYzFCUWQxQXlNR2d3Wm5oNE4xZHVXSFpzWVZWamJEaFRlVkZhV2k5VVFXOVhiMU5SWmtodGEzSmlRblpDYUZCdWVUQXlWRkJ3Y1VwV1VuQkVRVUZXUjJoMFlVNUxPRWs0UjBKbWJWbHNLMlpPWW5BNFRUVkdkRE5tUnpCa1pEY3dLMHhzTUZoNFpYWmhNa1kzYlVsV1IyaDZNMkV5UVc5SGNHMDVOR3BwTkRBd2RURnpVbVZxVjJVeFkyeERZMnh4WmxoME4wWnZVa1ZHTUVWSEszcGljalZUVkUxR2NHNTJPRzVxTUdSNWNFZG1SR2x6YTJJMlp6WkpUbmxoTVZsb01GTkhWM0poTkhwVVdIaDRUaTlXWTIxbGMwcDFPRGhJU0ZKVk5sZDNValJ4Y0U1TFUySnpRbWRqTkV4M1l6WkhXR0ZPZW5ZclYyOVBkbVZLZFZsRVdXNTFPRWw2VlhrM09YWlpiM2hNVkZGcE5WTXdaazFzZFVGWlIzSnBSak16YlhWUFdGQlFWVzgzVW1NdldXVjJjVEZaWmtsWGVHVnNVVXRQZVRKeVRrcGFOV1JWY1ZWdmN6bHlLemc1UTBoNE5HbzVheTl6V1VwUVJGZHlhRTFJTkZGMVdXdExZamcxYkM5dFdUVlJkbXhTU2pNcmVtODJWSEZ3ZDJkTE5uUm1aR0pMYjBSeGJVRlJjRE5LZG5kdUwyMHZNelZWU0VwSVdUSlJOV05TT0hsSmJqVkNZeTlaZEVod09HNWpTWFJ4UlZGc1NEQkZZVW92WkRWS1oxUnhWbXM5LjdTTG8wY3JNb2owbVYyQXBFZXFKZEUzVGdISno1RllOaTNvMFRCUGRjek8zTnUyeWx6cmdyRExhLTVaRTV0TGplamphTktaN25WRjdiclpkZGZocF9R" />
+            <input type="hidden" name="_eventId" value="submit" />
+            <input type="hidden" id="msgg" value="" />
+            <input type="hidden" id="mse" value="" />
+            <input type="hidden" id="codecheckmsg" value="" />
+        </div>
+        <div class="form_submit">
+            <input type="submit" value="登录" class="form_submit_button" accesskey="l"  tabindex="6" onclick="return remem()">
+
+        </div>
+        <div>
+        </div></form>
+</div>
+<div class="hm-body-bg">
+</div>
+<script type="text/javascript">
+    $(function(){
+        var errorMsg = document.getElementById("errorMsg").innerHTML;
+        if(errorMsg != ""){
+            $('#errorMsg').css("display","block");
+        }
+        //粒子背景
+        $(".hm-body-bg").jParticle({
+            particlesNumber:35,
+            background: "none",
+//            disableLinks:false,
+//            disableMouse:false,
+            shape: 'circle',
+            color: "rgba(255,255,255,.3)",
+            particle: {
+                color: "rgba(255,255,255,.5)",
+                minSize: 2,
+                maxSize: 12,
+                speed: 10
+            },
+        });
+    })
+    function remem() {
+        localStorage.username=document.getElementById("username").value;
+    }
+</script>
+</body>
+</html>

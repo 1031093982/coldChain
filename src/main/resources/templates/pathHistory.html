@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css"  media="all">
+    <script src="/layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<div>
+    &nbsp;&nbsp;&nbsp;&nbsp;订单编号：<span id="ordernum"></span>
+    <script type="text/javascript">$("#ordernum").html(localStorage.orderNum);</script>
+</div>
+<section id="tablediv">
+</section>
+<script type="text/javascript">
+    $.ajax({
+        url:"/order/pathListHis",
+        data:{orderNum:localStorage.orderNum},
+        type : "post",
+        success:function (resdata) {
+            var result="";
+            if(resdata=="[]"){
+                $("#tablediv").html("无数据记录！");
+                return;
+            }
+            var jsondata = JSON.parse(resdata);
+            result+="<table class=\"layui-table\">";
+            result+="<colgroup><col width=\"150\"><col width=\"150\"><col></colgroup>";
+            result+="<thead><tr><th>记录时间</th><th>位置</th></tr></thead>"
+            result+="<tbody>"
+            for(var i=0;i<jsondata.length;i++){
+                result+="<tr><td>"+formatUnixtimestamp(jsondata[i].recordTime)+"</td><td>"+jsondata[i].recordPath+"</td></tr>"
+            }
+            result+="</tbody></table>";
+            $("#tablediv").html(result);
+        }
+    });
+    function formatUnixtimestamp (unixtimestamp){
+        var unixtimestamp = new Date(unixtimestamp);
+        var year = 1900 + unixtimestamp.getYear();
+        var month = "0" + (unixtimestamp.getMonth() + 1);
+        var date = "0" + unixtimestamp.getDate();
+        var hour = "0" + unixtimestamp.getHours();
+        var minute = "0" + unixtimestamp.getMinutes();
+        var second = "0" + unixtimestamp.getSeconds();
+        return year + "-" + month.substring(month.length-2, month.length)  + "-" + date.substring(date.length-2, date.length)
+            + " " + hour.substring(hour.length-2, hour.length) + ":"
+            + minute.substring(minute.length-2, minute.length) + ":"
+            + second.substring(second.length-2, second.length);
+    }
+</script>
+</body>
+</html>
